@@ -24,7 +24,7 @@ export default function ListAll() {
         return new Promise((resolve) => {
           // Simulando um tempo de espera
           const list = ClientUsers.listAll();
-            resolve(list);
+        resolve(list);
         });
       };
 

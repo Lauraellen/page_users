@@ -11,12 +11,19 @@ export default function ListAll(props) {
                 </tr>
             </thead>
             <tbody>
-                {data.map((item, index) => (
-                    <tr key={index}>
-                        <td>{item.nome}</td>
-                        <td>{item.email}</td>
+
+                {data && data.length > 0 ? (
+                    data.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.nome}</td>
+                            <td>{item.email}</td>
+                        </tr>
+                    ))
+                ) : (
+                    <tr>
+                        <td colSpan="2">Sem dados</td>
                     </tr>
-                ))}
+                )}
             </tbody>
         </table>
 
