@@ -1,31 +1,22 @@
-export default function ListAll() {
+export default function ListAll(props) {
 
+    const data = props.message.data;
     return (
 
         <table>
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>Data de nascimento</th>
                     <th>Email</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>João</td>
-                    <td></td>
-                    <td>joao@example.com</td>
-                </tr>
-                <tr>
-                    <td>Maria</td>
-                    <td></td>
-                    <td>maria@example.com</td>
-                </tr>
-                <tr>
-                    <td>Carlos</td>
-                    <td></td>
-                    <td>carlos@example.com</td>
-                </tr>
+                {data.map((item, index) => (
+                    <tr key={index}>
+                        <td>{item.nome}</td>
+                        <td>{item.email}</td>
+                    </tr>
+                ))}
             </tbody>
         </table>
 

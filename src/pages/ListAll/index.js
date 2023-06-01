@@ -3,6 +3,7 @@ import Title from '../../components/Title';
 import Table from '../../components/Table';
 import { HiOutlineUsers } from 'react-icons/hi'
 import { toast } from 'react-toastify';
+import React, { useEffect, useState } from 'react';
 
 import './style.css';
 
@@ -11,20 +12,22 @@ import ClientUsers from '../../services/user.js';
 
 export default function ListAll() {
 
-    function getUsers(e) {
+    const [objetos, setObjetos] = useState([]);
 
-        const list = ClientUsers.listAll();
-        // const update = await ClientUsers.list();
-        // console.log('update', update);
-        // if (update.status === 200) {
-        //     toast.success('Busca realizada com sucesso');
-        // } else {
-        //     toast.error('Ops algo deu errado!');
-        // }
-    }
+    useEffect(() => {
+        getUsers().then((resultado) => {
+        setObjetos(resultado);
+        });
+    }, []);
 
-    getUsers();
-    
+    const getUsers = () => {
+        return new Promise((resolve) => {
+          // Simulando um tempo de espera
+          const list = ClientUsers.listAll();
+            resolve(list);
+        });
+      };
+
     return (
         <div>
             <Sidebar />
@@ -35,7 +38,7 @@ export default function ListAll() {
                 </Title>
 
                 <div className="container">
-                    <Table></Table>
+                    <Table message={objetos}></Table>
 
                 </div>
             </div>
