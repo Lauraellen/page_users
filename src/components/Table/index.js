@@ -1,6 +1,6 @@
-export default function ListAll(props) {
+export default function Table(props) {
 
-    const data = props.message.data;
+    const data = props.message.data ? props.message.data : [props.message];
     return (
 
         <table>

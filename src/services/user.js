@@ -14,7 +14,7 @@ const ClientUsers = {
     
     async listByFilter(data) {
         try {
-            const response = await client.put(`${userPath}/listByFilter`, data);
+            const response = await client.patch(`${userPath}/listUser`, data);
             return response;
         } catch (e) {
             return e;

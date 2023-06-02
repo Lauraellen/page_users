@@ -1,51 +1,69 @@
-import { FaUserNinja } from 'react-icons/fa';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-
-// import ClientUsers from '../../services/user.js';
+import { FaSearch } from 'react-icons/fa'
+import ClientUsers from '../../services/user.js';
 
 import Sidebar from '../../components/Sidebar';
-// import Title from '../../components/Title';
+import Title from '../../components/Title';
+import Table from '../../components/Table';
 
 import './style.css';
 
-export default function Delete() {
+export default function ListByEmail() {
 
     const [email, setEmail] = useState('');
+    const [data, getData] = useState(null);
 
-    // async function handleDelete(e) {
-    //     e.preventDefault();
+    async function getUserByEmail(e) {
+        e.preventDefault();
 
-    //     const data = {
-    //         email: email,
-    //     }
+        const data = {
+            email: email,
+        }
 
-    //     const update = await ClientUsers.deleteUser(data);
-    //     console.log('update', update);
-    //     if (update.status === 200) {
-    //         toast.success('Usuário deletado com sucesso!');
-    //     } else {
-    //         toast.error('Ops algo deu errado!');
-    //     }
-    // }
+        console.debug(data)
+        const getByEmail = await ClientUsers.listByFilter(data);
+        if (getByEmail.status === 200) {
+            toast.success('Usuário encontrado com sucesso!');
+            getData(getByEmail.data);
+        } else {
+            toast.error('Ops algo deu errado!');
+            getData(null);
+        }
+    }
+
+    useEffect(() => {
+        if (data !== null) {
+            console.log('Usuário encontrado com sucesso!', data);
+        }
+    }, [data]);
 
     return (
         <div>
             <Sidebar />
 
             <div className="content">
-                {/* <Title name="Deletar usuário">
-                    <FaUserNinja size={30} />
-                </Title> */}
+                <Title name="Busque usuário por email">
+                    
+                    <FaSearch size={30} />
+                </Title>
 
                 <div className="container">
-                    <form className="form-profile">
+                    <form className="form-profile" onSubmit={getUserByEmail}>
 
                         <label>E-mail</label>
                         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
 
-                        <button type="submit">Deletar</button>
+                        <button type="submit">Buscar</button>
                     </form>
+
+
+                </div>
+
+                <div className="container">
+    
+                    {data && <Table message={data} />}
+
                 </div>
 
             </div>
